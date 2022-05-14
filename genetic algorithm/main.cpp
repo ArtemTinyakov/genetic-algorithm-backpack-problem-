@@ -117,6 +117,7 @@ int main()
 {
 	singleton::get_instance();
 	std::vector<std::pair<double, double>> items = singleton::get_items();
+	int ndefect = (sz_popul < 10) ? 1 : sz_popul / 10;
 	srand(r_seed);
 	std::vector<individual> population;
 	for (int i = 0; i < sz_popul; ++i)
@@ -154,7 +155,8 @@ int main()
 		for (int i = sz_popul; i < population.size(); ++i)
 			population[i].mutation();
 		std::sort(population.begin(), population.end(), comp);
-		std::swap(population[1], population[population.size()-1]);
+		for (int i = 1; i <= ndefect; ++i)
+			population[sz_popul - i] = population[population.size() - i];
 		reduce_population(population);
 		for (auto e : population)
 			e.print();
