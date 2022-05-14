@@ -1,0 +1,51 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.32.31328.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///c:/proga/genetic algo/genetic algorithm/genetic algorithm/singleton.cpp"
+          },
+          "roles": [
+            "analysisTarget"
+          ],
+          "hashes": {
+            "sha-256": "ea7ddaa7d70e01fa4cb46c4b8d6c4f3c7e880937d5618f4a578572a7a8838395"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/proga/genetic algo/genetic algorithm/genetic algorithm/singleton.h"
+          },
+          "hashes": {
+            "sha-256": "d00e084f4155cf4b1b31c31cac45d94dcff531e3048cd58aa9217fdeffea1653"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/proga/genetic algo/genetic algorithm/genetic algorithm/constants.h"
+          },
+          "hashes": {
+            "sha-256": "a6524ebec113457e237d14afffca1bd332e5d4e48c473fcfca303e8fdec73b58"
+          }
+        }
+      ]
+    }
+  ]
+}

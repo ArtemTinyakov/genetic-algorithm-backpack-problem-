@@ -1,0 +1,82 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C6993",
+          "message": {
+            "text": "При анализе кода структуры OpenMP игнорируются; анализируется код одного потока."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///C:/Proga/genetic algo/genetic algorithm/genetic algorithm/main.cpp"
+                },
+                "region": {
+                  "startLine": 29,
+                  "startColumn": 10,
+                  "endLine": 29,
+                  "endColumn": 10
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.32.31328.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///C:/Proga/genetic algo/genetic algorithm/genetic algorithm/main.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "48fa05a3b26c3c45b020508895bedb059015bb2c6f3b79a69f151fd2f7abae03"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/proga/genetic algo/genetic algorithm/genetic algorithm/individual.h"
+          },
+          "hashes": {
+            "sha-256": "86b08b26f4ee6da181132aac8e64124ce0730724da0319912d538ef1506136ac"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/proga/genetic algo/genetic algorithm/genetic algorithm/constants.h"
+          },
+          "hashes": {
+            "sha-256": "a6524ebec113457e237d14afffca1bd332e5d4e48c473fcfca303e8fdec73b58"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///c:/proga/genetic algo/genetic algorithm/genetic algorithm/singleton.h"
+          },
+          "hashes": {
+            "sha-256": "d00e084f4155cf4b1b31c31cac45d94dcff531e3048cd58aa9217fdeffea1653"
+          }
+        }
+      ]
+    }
+  ]
+}
