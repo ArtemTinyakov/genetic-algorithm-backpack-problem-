@@ -10,6 +10,13 @@ bool comp(individual i1, individual i2)
 	return i1.fitness() > i2.fitness();
 }
 
+void print_fit_pop(std::vector<individual> popul)
+{
+	for (auto e : popul)
+		std::cout << e.fitness() << ' ';
+	std::cout << '\n';
+}
+
 double max3(double d1, double d2, double d3)
 {
 	if (d1 >= d2 && d1 >= d3)
@@ -30,7 +37,8 @@ double max_fit(std::vector<individual> popul)
 
 double p_cross(individual indiv, std::vector<individual> popul)
 {
-	return indiv.fitness() / max_fit(popul);
+	double res = indiv.fitness() / max_fit(popul);
+	return (res > 0) ? res : 0.2;
 /*
 	double min_fit = indiv.fitness();
 	#pragma omp parallel for
@@ -143,10 +151,15 @@ int main()
 			}
 		}
 		population.insert(population.end(), kids.begin(), kids.end());
-		std::sort(population.begin(), population.end(), comp);
-		reduce_population(population);
-		for (int i = 0; i < sz_popul; ++i)
+		for (int i = sz_popul; i < population.size(); ++i)
 			population[i].mutation();
+		std::sort(population.begin(), population.end(), comp);
+		std::swap(population[1], population[population.size()-1]);
+		reduce_population(population);
+		for (auto e : population)
+			e.print();
+		std::cout << "fitnesses ";
+		print_fit_pop(population);
 		std::cout << "generation " << i << ", best fitness == " << best_individ(population).fitness() << '\n';
 	}
 	std::cout << "backpack filled with " << best_individ(population).fitness();

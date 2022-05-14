@@ -16,7 +16,7 @@ individual::~individual() = default;
 double individual::fitness()
 {
 	double w{.0}, c{.0};
-	#pragma omp parallel for
+//	#pragma omp parallel for
 	for (int i = 0; i < stuff.size(); ++i)
 		if (stuff[i])
 		{
@@ -28,7 +28,7 @@ double individual::fitness()
 
 void individual::mutation()
 {
-	#pragma omp parallel for
+//	#pragma omp parallel for
 	for (int i = 0; i < stuff.size(); ++i)
 	{
 		if (rand() % 100 < (mut_prob * 100))
