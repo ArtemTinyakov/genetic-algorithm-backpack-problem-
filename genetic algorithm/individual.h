@@ -17,6 +17,8 @@ class individual{
 		void mutation();
 		individual clone();
 		void print();
+		std::vector<bool> get_stuff();
+
 
 		friend std::pair<individual, individual> crossing(individual, individual);
 		friend void swap(individual&, individual&, int);

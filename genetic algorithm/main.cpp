@@ -29,7 +29,7 @@ double max3(double d1, double d2, double d3)
 double max_fit(std::vector<individual> popul)
 {
 	double res{ 0 };
-	#pragma omp parallel for
+//	#pragma omp parallel for
 	for (int i = 0; i < popul.size(); ++i)
 		res = (res > popul[i].fitness()) ? res : popul[i].fitness();
 	return res;
@@ -37,6 +37,7 @@ double max_fit(std::vector<individual> popul)
 
 double p_cross(individual indiv, std::vector<individual> popul)
 {
+
 	double res = indiv.fitness() / max_fit(popul);
 	return (res > 0) ? res : 0.2;
 /*
@@ -72,6 +73,16 @@ bool will_cross(double d1, double d2)
 	return ((double(rand() % 100) / 100) < mean_geom(d1, d2)) ? true : false; //can use mean_arith, mean_geom or mean_harmonic
 }
 
+bool will_cross(individual i1, individual i2)
+{
+	double difers{ .0 };
+	std::vector<bool> stuff1 = i1.get_stuff(), stuff2 = i2.get_stuff();
+	for (int i = 0; i < n_items; ++i)
+		if (stuff1[i] != stuff2[i])
+			++difers;
+	return ((double(rand() % 100) / 100) < (difers / n_items) < 0.2) ? 0.2 : double(difers/n_items) ? true : false;
+}
+
 void reduce_population(std::vector<individual>& popul)
 {
 	popul.erase(popul.begin() + sz_popul, popul.end());
@@ -87,7 +98,7 @@ individual max3_fit(individual i1, individual i2, individual i3)
 	return i3;
 }
 
-std::vector<individual> tournament(std::vector<individual> population)
+std::vector<individual> tournament(std::vector<individual> popul)
 {
 	std::vector<individual> new_p;
 //	#pragma omp parallel for            not working
@@ -96,11 +107,11 @@ std::vector<individual> tournament(std::vector<individual> population)
 		int i1{ 0 }, i2{ 0 }, i3{ 0 };
 		while ((i1 == i2) || (i2 == i3) || (i1 == i3))
 		{
-			i1 = rand() % sz_popul;
-			i2 = rand() % sz_popul;
-			i3 = rand() % sz_popul;
+			i1 = rand() % popul.size();
+			i2 = rand() % popul.size();
+			i3 = rand() % popul.size();
 		}
-		new_p.push_back(max3_fit(population[i1], population[i2], population[i3]));
+		new_p.push_back(max3_fit(popul[i1], popul[i2], popul[i3]));
 	}
 	return new_p;
 }
@@ -109,15 +120,21 @@ individual best_individ(std::vector<individual> popul)
 {
 	int ind{ 0 }, fit{ 0 };
 	for (int i = 0; i < popul.size(); ++i)
-		ind = (popul[i].fitness() > fit) ? i : ind;
+		if (popul[i].fitness() > fit)
+		{
+			ind = i;
+			fit = popul[i].fitness();
+		}
 	return popul[ind];
 }
 
 int main()
 {
+
 	singleton::get_instance();
 	std::vector<std::pair<double, double>> items = singleton::get_items();
-	int ndefect = (sz_popul < 10) ? 1 : sz_popul / 10;
+//	int ndefect = (sz_popul < 10) ? 1 : sz_popul / 10;
+	int max_children = sz_popul;
 	srand(r_seed);
 	std::vector<individual> population;
 	for (int i = 0; i < sz_popul; ++i)
@@ -143,7 +160,8 @@ int main()
 		{
 			for (int k = j+1; k < sz_popul; ++k)
 			{
-				if (will_cross(p_cross(population[j], population), p_cross(population[k], population)))
+//				if (will_cross(p_cross(population[j], population), p_cross(population[k], population)))
+				if(will_cross(population[j], population[k]) && kids.size() < max_children)
 				{
 					std::pair<individual, individual> kid = crossing(population[j], population[k]);
 					kids.push_back(kid.first);
@@ -154,10 +172,11 @@ int main()
 		population.insert(population.end(), kids.begin(), kids.end());
 		for (int i = sz_popul; i < population.size(); ++i)
 			population[i].mutation();
-		std::sort(population.begin(), population.end(), comp);
+/*		std::sort(population.begin(), population.end(), comp);
 		for (int i = 1; i <= ndefect; ++i)
 			population[sz_popul - i] = population[population.size() - i];
 		reduce_population(population);
+*/
 		for (auto e : population)
 			e.print();
 		std::cout << "fitnesses ";

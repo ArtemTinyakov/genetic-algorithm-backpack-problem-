@@ -26,6 +26,11 @@ double individual::fitness()
 	return (w > max_w) ? 0 : c;
 }
 
+std::vector<bool> individual::get_stuff()
+{
+	return stuff;
+}
+
 void individual::mutation()
 {
 //	#pragma omp parallel for
