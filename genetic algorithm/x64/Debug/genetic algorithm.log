@@ -1,4 +1,7 @@
-﻿  main.cpp
-C:\Proga\genetic algo\genetic algorithm\genetic algorithm\main.cpp(83,39): warning C4804: <: небезопасное использование типа "bool" в операции
-C:\Proga\genetic algo\genetic algorithm\genetic algorithm\main.cpp(126,26): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+﻿  individual.cpp
+  main.cpp
+  singleton.cpp
+  Создание кода...
+LINK : warning LNK4044: нераспознанный параметр "/utf-8"; игнорируется
+LINK : warning LNK4044: нераспознанный параметр "/utf-8"; игнорируется
   genetic algorithm.vcxproj -> C:\Proga\genetic algo\genetic algorithm\x64\Debug\genetic algorithm.exe

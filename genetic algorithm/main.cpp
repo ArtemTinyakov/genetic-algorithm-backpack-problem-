@@ -4,6 +4,9 @@
 #include <cmath>
 #include "individual.h"
 #include "singleton.h"
+#include <SDL.h>
+
+#undef main
 
 bool comp(individual i1, individual i2)
 {
@@ -77,15 +80,15 @@ bool will_cross(individual i1, individual i2)
 {
 	double difers{ .0 };
 	std::vector<bool> stuff1 = i1.get_stuff(), stuff2 = i2.get_stuff();
-	for (int i = 0; i < n_items; ++i)
+	for (int i = 0; i < singleton::get_n_items(); ++i)
 		if (stuff1[i] != stuff2[i])
 			++difers;
-	return ((double(rand() % 100) / 100) < (difers / n_items) < 0.2) ? 0.2 : double(difers/n_items) ? true : false;
+	return ((double(rand() % 100) / 100) < (((difers / singleton::get_n_items()) < 0.2) ? 0.2 : double(difers/singleton::get_n_items()))) ? true : false;
 }
 
 void reduce_population(std::vector<individual>& popul)
 {
-	popul.erase(popul.begin() + sz_popul, popul.end());
+	popul.erase(popul.begin() + singleton::get_sz_popul(), popul.end());
 }
 
 individual max3_fit(individual i1, individual i2, individual i3)
@@ -102,7 +105,7 @@ std::vector<individual> tournament(std::vector<individual> popul)
 {
 	std::vector<individual> new_p;
 //	#pragma omp parallel for            not working
-	for (int i = 0; i < sz_popul; ++i)
+	for (int i = 0; i < singleton::get_sz_popul(); ++i)
 	{
 		int i1{ 0 }, i2{ 0 }, i3{ 0 };
 		while ((i1 == i2) || (i2 == i3) || (i1 == i3))
@@ -118,7 +121,8 @@ std::vector<individual> tournament(std::vector<individual> popul)
 
 individual best_individ(std::vector<individual> popul)
 {
-	int ind{ 0 }, fit{ 0 };
+	int ind{ 0 };
+	double fit{ .0 };
 	for (int i = 0; i < popul.size(); ++i)
 		if (popul[i].fitness() > fit)
 		{
@@ -128,16 +132,20 @@ individual best_individ(std::vector<individual> popul)
 	return popul[ind];
 }
 
-int main()
+int main(int argc, char* argv[])
 {
 
 	singleton::get_instance();
 	std::vector<std::pair<double, double>> items = singleton::get_items();
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
+		std::cout << "SDL initialization failed. SDL error " << SDL_GetError() << '\n';
+	else
+		std::cout << "SDL initialization succeed!\n";
 //	int ndefect = (sz_popul < 10) ? 1 : sz_popul / 10;
-	int max_children = sz_popul;
-	srand(r_seed);
+	int max_children = singleton::get_sz_popul();
+	srand(singleton::get_r_seed());
 	std::vector<individual> population;
-	for (int i = 0; i < sz_popul; ++i)
+	for (int i = 0; i < singleton::get_sz_popul(); ++i)
 		population.push_back(individual());
 /*	std::vector<double> fit(sz_popul);
 	#pragma omp parallel for
@@ -152,13 +160,13 @@ int main()
 /*	for (auto e : fit)
 		std::cout << e << '\n';
 */
-	for (int i = 0; i < max_geners; ++i)
+	for (int i = 0; i < singleton::get_max_geners(); ++i)
 	{
 		std::vector<individual> kids;
 		population = tournament(population);
-		for (int j = 0; j < sz_popul-1; ++j)
+		for (int j = 0; j < singleton::get_sz_popul() - 1; ++j)
 		{
-			for (int k = j+1; k < sz_popul; ++k)
+			for (int k = j+1; k < singleton::get_sz_popul(); ++k)
 			{
 //				if (will_cross(p_cross(population[j], population), p_cross(population[k], population)))
 				if(will_cross(population[j], population[k]) && kids.size() < max_children)
@@ -170,7 +178,7 @@ int main()
 			}
 		}
 		population.insert(population.end(), kids.begin(), kids.end());
-		for (int i = sz_popul; i < population.size(); ++i)
+		for (int i = singleton::get_sz_popul(); i < population.size(); ++i)
 			population[i].mutation();
 /*		std::sort(population.begin(), population.end(), comp);
 		for (int i = 1; i <= ndefect; ++i)

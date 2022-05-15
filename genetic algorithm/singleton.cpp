@@ -1,11 +1,16 @@
 #include "singleton.h"
-#include "constants.h"
 #include <fstream>
 #include <iostream>
 
 singleton* singleton::p_instance = 0;
 singletonDestroyer singleton::destr;
 std::vector<std::pair<double, double>> singleton::items;
+double singleton::mut_prob = 0.2; //probability of mutation
+int singleton::max_wei = 25; //maximum weight in backpack
+int singleton::n_items = 10; //number of items at all
+int singleton::max_geners = 100; //maximum number of generations
+int singleton::r_seed = 228; //random seed
+int singleton::sz_popul = 5; //size of population
 
 singleton::singleton()
 {
@@ -52,6 +57,42 @@ singleton& singleton::get_instance()
 
 const std::vector<std::pair<double, double>>& singleton::get_items()
 {
-//	std::cout << "getting items...\n";
+//	std::cout << "getting items weight-cost list...\n";
 	return items;
+}
+
+const double& singleton::get_mut_prob()
+{
+//	std::cout << "getting mutation probability...\n";
+	return mut_prob;
+}
+
+const int& singleton::get_max_wei()
+{
+//	std::cout << "getting maximum weight the backpack can carry...\n";
+	return max_wei;
+}
+
+const int& singleton::get_n_items()
+{
+//	std::cout << "getting number of items...\n";
+	return n_items;
+}
+
+const int& singleton::get_max_geners()
+{
+//	std::cout << "getting number of generations...\n";
+	return max_geners;
+}
+
+const int& singleton::get_r_seed()
+{
+//	std::cout << "getting seed for randomizer...\n";
+	return r_seed;
+}
+
+const int& singleton::get_sz_popul()
+{
+//	std::cout << "getting size of population";
+	return sz_popul;
 }

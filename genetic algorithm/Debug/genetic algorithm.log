@@ -1,0 +1,5 @@
+﻿  individual.cpp
+  main.cpp
+C:\Proga\genetic algo\genetic algorithm\genetic algorithm\main.cpp(7,10): fatal error C1083: Не удается открыть файл включение: SDL.h: No such file or directory,
+  singleton.cpp
+  Создание кода...

@@ -1,7 +1,6 @@
 #ifndef INDIVIDUAL
 #define INDIVIDUAL
 
-#include "constants.h"
 #include <vector>
 #include <string>
 

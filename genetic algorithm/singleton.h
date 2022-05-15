@@ -18,7 +18,13 @@ class singletonDestroyer {
 class singleton {
 	static singleton* p_instance;
 	static singletonDestroyer destr;
-	static std::vector<std::pair<double, double>> items;
+	static std::vector<std::pair<double, double>> items; //list of weights and costs of items
+	static double mut_prob; //probability of mutation
+	static int max_wei; //maximum weight in backpack
+	static int n_items; //number of items at all
+	static int max_geners; //maximum number of generations
+	static int r_seed; //random seed
+	static int sz_popul; //size of population
 
 	protected:
 
@@ -32,6 +38,12 @@ class singleton {
 
 	static singleton& get_instance();
 	static const std::vector<std::pair<double, double>>& get_items();
+	static const double& get_mut_prob();
+	static const int& get_max_wei();
+	static const int& get_n_items();
+	static const int& get_max_geners();
+	static const int& get_r_seed();
+	static const int& get_sz_popul();
 };
 
 #endif SINGLETON

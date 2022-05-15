@@ -7,7 +7,7 @@
 individual::individual() : stuff{}
 {
 //	#pragma omp parallel for            not working
-	for (int i = 0; i < n_items; ++i)
+	for (int i = 0; i < singleton::get_n_items(); ++i)
 		stuff.push_back(rand() % 2);
 }
 
@@ -17,28 +17,30 @@ double individual::fitness()
 {
 	double w{.0}, c{.0};
 //	#pragma omp parallel for
-	for (int i = 0; i < stuff.size(); ++i)
+	for (std::size_t i = 0; i < stuff.size(); ++i)
 		if (stuff[i])
 		{
 			w += singleton::get_items()[i].first;
 			c += singleton::get_items()[i].second;
 		}
-	return (w > max_w) ? 0 : c;
-}
-
-std::vector<bool> individual::get_stuff()
-{
-	return stuff;
+	return (w > singleton::get_max_wei()) ? 0 : c;
 }
 
 void individual::mutation()
 {
 //	#pragma omp parallel for
-	for (int i = 0; i < stuff.size(); ++i)
+	for (std::size_t i = 0; i < stuff.size(); ++i)
 	{
-		if (rand() % 100 < (mut_prob * 100))
+		if (rand() % 100 < (singleton::get_mut_prob() * 100))
 			stuff[i] = !stuff[i];
 	}
+}
+
+individual individual::clone()
+{
+	individual new_ind;
+	new_ind.stuff = stuff;
+	return new_ind;
 }
 
 void individual::print()
@@ -48,30 +50,24 @@ void individual::print()
 	std::cout << '\n';
 }
 
+std::vector<bool> individual::get_stuff()
+{
+	return stuff;
+}
+
+std::pair<individual, individual> crossing(individual individ1, individual individ2)
+{
+	std::pair<individual, individual> res{individ1, individ1};
+	int cut_point = rand() % singleton::get_n_items();
+	#pragma omp parallel for
+	for (int i = cut_point; i < singleton::get_n_items(); ++i)
+		swap(res.first, res.second, i);
+	return res;
+}
+
 void swap(individual& individ1, individual& individ2, int i)
 {
 	bool rab = individ1.stuff[i];
 	individ1.stuff[i] = individ2.stuff[i];
 	individ2.stuff[i] = rab;
-}
-
-std::pair<individual, individual> crossing(individual individ1, individual individ2)
-{
-	std::pair<individual, individual> res;
-	res.first = individ1;
-	res.second = individ2;
-	int cut_point = rand() % n_items;
-	#pragma omp parallel for
-	for (int i = cut_point; i < n_items; ++i)
-	{
-		swap(res.first, res.second, i);
-	}
-	return res;
-}
-
-individual individual::clone()
-{
-	individual new_ind;
-	new_ind.stuff = stuff;
-	return new_ind;
 }
