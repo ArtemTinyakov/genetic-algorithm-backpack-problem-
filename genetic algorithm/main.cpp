@@ -8,6 +8,70 @@
 
 #undef main
 
+//--------------------graphics--------------------//
+
+void init_sdl()
+{
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
+		std::cout << "SDL initialization failed. SDL error " << SDL_GetError() << '\n';
+	else
+		std::cout << "SDL initialization succeed!\n";
+}
+
+void test1()
+{
+	init_sdl();
+	const int max_width{ 1536 }, max_height{ 824 };
+	SDL_Window* window = nullptr;
+	SDL_Surface* scrSurface = nullptr;
+	window = SDL_CreateWindow("SDL test", 0, 0, max_width, max_height, SDL_WINDOW_SHOWN);
+	if (!window)
+		std::cout << "Window wasn't created. SDL error " << SDL_GetError() << '\n';
+	else
+	{
+		scrSurface = SDL_GetWindowSurface(window);
+		SDL_Rect rect{ 100, 100, 100, 300 };
+		SDL_FillRect(scrSurface, nullptr, SDL_MapRGB(scrSurface->format, 0x0, 0x0, 0x0));
+		SDL_FillRect(scrSurface, &rect, SDL_MapRGB(scrSurface->format, 0xFF, 0x0, 0x0));
+		SDL_UpdateWindowSurface(window);
+		SDL_Delay(1000);
+	}
+	SDL_DestroyWindow(window);
+	SDL_Quit();
+}
+
+void test2()
+{
+	init_sdl();
+	const int max_width{ 1536 }, max_height{ 824 };
+	SDL_Window* window = nullptr;
+	SDL_Surface* scrSurface1 = nullptr;
+	SDL_Surface* scrSurface2 = nullptr;
+	window = SDL_CreateWindow("SDL test", SDL_WINDOWPOS_CENTERED_MASK, SDL_WINDOWPOS_CENTERED_MASK, max_width, max_height, SDL_WINDOW_FULLSCREEN);
+	if (!window)
+		std::cout << "Window wasn't created. SDL error " << SDL_GetError() << '\n';
+	else
+	{
+		scrSurface1 = SDL_GetWindowSurface(window);
+	}
+	scrSurface2 = SDL_LoadBMP("C:/pics/kekw.bmp");
+	if (!scrSurface2)
+		std::cout << "can't load picture. SDL error " << SDL_GetError() << '\n';
+	else
+	{
+		SDL_Rect rect{ 200, 100, 100, 100 };
+		SDL_BlitSurface(scrSurface2, nullptr, scrSurface1, &rect);
+		SDL_UpdateWindowSurface(window);
+		SDL_Delay(3000);
+	}
+	SDL_FreeSurface(scrSurface1);
+	SDL_FreeSurface(scrSurface2);
+	SDL_DestroyWindow(window);
+	SDL_Quit();
+}
+
+//------------------------------------------------//
+
 bool comp(individual i1, individual i2)
 {
 	return i1.fitness() > i2.fitness();
@@ -32,7 +96,7 @@ double max3(double d1, double d2, double d3)
 double max_fit(std::vector<individual> popul)
 {
 	double res{ 0 };
-//	#pragma omp parallel for
+	#pragma omp parallel for
 	for (int i = 0; i < popul.size(); ++i)
 		res = (res > popul[i].fitness()) ? res : popul[i].fitness();
 	return res;
@@ -104,7 +168,7 @@ individual max3_fit(individual i1, individual i2, individual i3)
 std::vector<individual> tournament(std::vector<individual> popul)
 {
 	std::vector<individual> new_p;
-//	#pragma omp parallel for            not working
+//	#pragma omp parallel for            //not working
 	for (int i = 0; i < singleton::get_sz_popul(); ++i)
 	{
 		int i1{ 0 }, i2{ 0 }, i3{ 0 };
@@ -134,13 +198,9 @@ individual best_individ(std::vector<individual> popul)
 
 int main(int argc, char* argv[])
 {
-
+//	test2();
 	singleton::get_instance();
 	std::vector<std::pair<double, double>> items = singleton::get_items();
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
-		std::cout << "SDL initialization failed. SDL error " << SDL_GetError() << '\n';
-	else
-		std::cout << "SDL initialization succeed!\n";
 //	int ndefect = (sz_popul < 10) ? 1 : sz_popul / 10;
 	int max_children = singleton::get_sz_popul();
 	srand(singleton::get_r_seed());
@@ -152,11 +212,11 @@ int main(int argc, char* argv[])
 	for (int i = 0; i < sz_popul; ++i)
 		fit[i] = population[i].fitness();
 */
-/*	for (auto e : population)
+	for (auto e : population)
 	{
 		e.print();
 	}
-*/
+	std::cout << '\n';
 /*	for (auto e : fit)
 		std::cout << e << '\n';
 */

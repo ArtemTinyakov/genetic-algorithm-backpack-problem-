@@ -4,11 +4,12 @@
 #include <fstream>
 #include <iostream>
 
-individual::individual() : stuff{}
+individual::individual() : stuff(singleton::get_n_items(), -1)
 {
-//	#pragma omp parallel for            not working
+//	std::cout << "creating individual...\n";
+	#pragma omp parallel for            //not working
 	for (int i = 0; i < singleton::get_n_items(); ++i)
-		stuff.push_back(rand() % 2);
+		stuff[i] = rand() % 2;
 }
 
 individual::~individual() = default;
@@ -16,8 +17,8 @@ individual::~individual() = default;
 double individual::fitness()
 {
 	double w{.0}, c{.0};
-//	#pragma omp parallel for
-	for (std::size_t i = 0; i < stuff.size(); ++i)
+	#pragma omp parallel for 
+	for (int i = 0; i < stuff.size(); ++i)
 		if (stuff[i])
 		{
 			w += singleton::get_items()[i].first;
@@ -29,7 +30,7 @@ double individual::fitness()
 void individual::mutation()
 {
 //	#pragma omp parallel for
-	for (std::size_t i = 0; i < stuff.size(); ++i)
+	for (int i = 0; i < stuff.size(); ++i)
 	{
 		if (rand() % 100 < (singleton::get_mut_prob() * 100))
 			stuff[i] = !stuff[i];

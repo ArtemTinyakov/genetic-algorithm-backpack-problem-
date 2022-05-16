@@ -10,7 +10,7 @@ int singleton::max_wei = 25; //maximum weight in backpack
 int singleton::n_items = 10; //number of items at all
 int singleton::max_geners = 100; //maximum number of generations
 int singleton::r_seed = 228; //random seed
-int singleton::sz_popul = 5; //size of population
+int singleton::sz_popul = 10; //size of population
 
 singleton::singleton()
 {
