@@ -1,4 +1,5 @@
 #include "singleton.h"
+#include "log.h"
 #include <fstream>
 #include <iostream>
 
@@ -11,27 +12,28 @@ int singleton::n_items = 10; //number of items at all
 int singleton::max_geners = 100; //maximum number of generations
 int singleton::r_seed = 228; //random seed
 int singleton::sz_popul = 10; //size of population
+Log singleton::logfile;
 
 singleton::singleton()
 {
 	p_instance = 0;
 	items.clear();
 	items.resize(0);
-	std::cout << "trying to read input file...\n";
+	logfile.printLog("trying to read input file...");
 	std::ifstream in("input.txt");
 	if (in.is_open())
 	{
-		std::cout << "reading...\n";
+		logfile.printLog("reading...");
 		std::pair<double, double> rab;
 		for (int i = 0; i < n_items; ++i)
 		{
 			in >> rab.first >> rab.second;
 			items.push_back(rab);
-			std::cout << "weight : " << rab.first << ", cost : " << rab.second << '\n';
+			logfile.printLog("weight : " + std::to_string(rab.first) + ", cost : " + std::to_string(rab.second));
 		}
 	}
 	else
-		std::cout << "input file is unavailable, closing...";
+		logfile.printLog("input file is unavailable, closing...");
 	in.close();
 }
 
@@ -57,42 +59,47 @@ singleton& singleton::get_instance()
 
 const std::vector<std::pair<double, double>>& singleton::get_items()
 {
-//	std::cout << "getting items weight-cost list...\n";
+//	logfile.printLog("getting items weight-cost list...");
 	return items;
 }
 
 const double& singleton::get_mut_prob()
 {
-//	std::cout << "getting mutation probability...\n";
+//	logfile.printLog("getting mutation probability...");
 	return mut_prob;
 }
 
 const int& singleton::get_max_wei()
 {
-//	std::cout << "getting maximum weight the backpack can carry...\n";
+//	logfile.printLog("getting maximum weight the backpack can carry...");
 	return max_wei;
 }
 
 const int& singleton::get_n_items()
 {
-//	std::cout << "getting number of items...\n";
+//	logfile.printLog("getting number of items...");
 	return n_items;
 }
 
 const int& singleton::get_max_geners()
 {
-//	std::cout << "getting number of generations...\n";
+//	logfile.printLog("getting number of generations...");
 	return max_geners;
 }
 
 const int& singleton::get_r_seed()
 {
-//	std::cout << "getting seed for randomizer...\n";
+//	logfile.printLog("getting seed for randomizer...");
 	return r_seed;
 }
 
 const int& singleton::get_sz_popul()
 {
-//	std::cout << "getting size of population";
+//	logfile.printLog("getting size of population...");
 	return sz_popul;
+}
+
+Log& singleton::get_logfile()
+{
+	return logfile;
 }

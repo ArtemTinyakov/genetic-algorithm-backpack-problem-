@@ -12,15 +12,15 @@ class individual{
 		individual();
 		~individual();
 
-		double fitness();
+		int fitness();
 		void mutation();
 		individual clone();
 		void print();
 		std::vector<bool> get_stuff();
+		std::string to_string();
 
 
 		friend std::pair<individual, individual> crossing(individual, individual);
-		friend void swap(individual&, individual&, int);
 };
 
 #endif //INDIVIDUAL

@@ -2,6 +2,7 @@
 #define SINGLETON
 
 #include <vector>
+#include "log.h"
 
 class singleton;
 
@@ -25,6 +26,7 @@ class singleton {
 	static int max_geners; //maximum number of generations
 	static int r_seed; //random seed
 	static int sz_popul; //size of population
+	static Log logfile; //log
 
 	protected:
 
@@ -44,6 +46,7 @@ class singleton {
 	static const int& get_max_geners();
 	static const int& get_r_seed();
 	static const int& get_sz_popul();
+	static Log& get_logfile();
 };
 
 #endif SINGLETON
