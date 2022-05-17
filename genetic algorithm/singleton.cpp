@@ -5,14 +5,16 @@
 
 singleton* singleton::p_instance = 0;
 singletonDestroyer singleton::destr;
-std::vector<std::pair<double, double>> singleton::items;
+std::vector<std::pair<int, int>> singleton::items;
 double singleton::mut_prob = 0.2; //probability of mutation
 int singleton::max_wei = 25; //maximum weight in backpack
 int singleton::n_items = 10; //number of items at all
-int singleton::max_geners = 100; //maximum number of generations
+int singleton::max_geners = 20; //maximum number of generations
 int singleton::r_seed = 228; //random seed
 int singleton::sz_popul = 10; //size of population
 Log singleton::logfile;
+int singleton::width = 640;
+int singleton::height = 480;
 
 singleton::singleton()
 {
@@ -24,7 +26,7 @@ singleton::singleton()
 	if (in.is_open())
 	{
 		logfile.printLog("reading...");
-		std::pair<double, double> rab;
+		std::pair<int, int> rab;
 		for (int i = 0; i < n_items; ++i)
 		{
 			in >> rab.first >> rab.second;
@@ -57,7 +59,7 @@ singleton& singleton::get_instance()
 	return *p_instance;
 }
 
-const std::vector<std::pair<double, double>>& singleton::get_items()
+const std::vector<std::pair<int, int>>& singleton::get_items()
 {
 //	logfile.printLog("getting items weight-cost list...");
 	return items;
@@ -102,4 +104,14 @@ const int& singleton::get_sz_popul()
 Log& singleton::get_logfile()
 {
 	return logfile;
+}
+
+const int& singleton::get_width()
+{
+	return width;
+}
+
+const int& singleton::get_height()
+{
+	return height;
 }

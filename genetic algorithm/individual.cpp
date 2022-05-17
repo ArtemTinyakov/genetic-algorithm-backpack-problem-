@@ -10,7 +10,7 @@ individual::individual() : stuff(singleton::get_n_items(), -1)
 //	std::cout << "creating individual...\n";
 	#pragma omp parallel for
 	for (int i = 0; i < singleton::get_n_items(); ++i)
-		stuff[i] = rand() % 2;
+		stuff[i] = bool(rand() % 2);
 }
 
 individual::~individual() = default;
@@ -18,7 +18,7 @@ individual::~individual() = default;
 int individual::fitness()
 {
 //	singleton::get_logfile().printLog("getting fitness of individual...");
-	double w{.0}, c{.0};
+	int w{0}, c{0};
 	#pragma omp parallel for 
 	for (int i = 0; i < stuff.size(); ++i)
 		if (stuff[i])

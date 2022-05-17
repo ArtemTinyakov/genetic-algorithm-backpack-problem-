@@ -19,7 +19,7 @@ class singletonDestroyer {
 class singleton {
 	static singleton* p_instance;
 	static singletonDestroyer destr;
-	static std::vector<std::pair<double, double>> items; //list of weights and costs of items
+	static std::vector<std::pair<int, int>> items; //list of weights and costs of items
 	static double mut_prob; //probability of mutation
 	static int max_wei; //maximum weight in backpack
 	static int n_items; //number of items at all
@@ -27,6 +27,8 @@ class singleton {
 	static int r_seed; //random seed
 	static int sz_popul; //size of population
 	static Log logfile; //log
+	static int width; //screen width for graphics
+	static int height; //screen height for graphics
 
 	protected:
 
@@ -39,7 +41,7 @@ class singleton {
 	public:
 
 	static singleton& get_instance();
-	static const std::vector<std::pair<double, double>>& get_items();
+	static const std::vector<std::pair<int, int>>& get_items();
 	static const double& get_mut_prob();
 	static const int& get_max_wei();
 	static const int& get_n_items();
@@ -47,6 +49,8 @@ class singleton {
 	static const int& get_r_seed();
 	static const int& get_sz_popul();
 	static Log& get_logfile();
+	static const int& get_width();
+	static const int& get_height();
 };
 
 #endif SINGLETON

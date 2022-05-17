@@ -4,6 +4,7 @@
 #include <cmath>
 #include "individual.h"
 #include "singleton.h"
+#include "graphics.h"
 #include <SDL.h>
 #include <ctime>
 
@@ -169,6 +170,11 @@ bool will_cross(individual i1, individual i2)
 	return ((double(rand() % 100) / 100) < (((difers / singleton::get_n_items()) < 0.2) ? 0.2 : double(difers/singleton::get_n_items()))) ? true : false;
 }
 
+bool will_cross(int fit1, int fit2, std::vector<individual> popul)
+{
+	return (fit1 >= max_fit(popul) && fit2 >= max_fit(popul)) ? true : false;
+}
+
 void reduce_population(std::vector<individual>& popul)
 {
 	singleton::get_logfile().printLog("reducing population...");
@@ -226,10 +232,29 @@ int main(int argc, char* argv[])
 {
 	singleton::get_instance();
 	singleton::get_logfile().printLog("Start of genetic algorithm");
+	graphics graph;
+/*	init_sdl();
+	SDL_Window* window = nullptr;
+	SDL_Renderer* ren = nullptr;
+	window = SDL_CreateWindow("kekw", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN);
+	if (!window)
+		std::cout << "can't create window. SDL error : " << SDL_GetError() << '\n';
+	ren = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	if (!ren)
+		std::cout << "can't create renderer. SDL error : " << SDL_GetError() << '\n';
+	SDL_SetRenderDrawColor(ren, 0x00, 0xB0, 0x20, 0x00);
+	SDL_Rect rect{ 100,100,50,90 };
+	SDL_RenderFillRect(ren, &rect);
+	SDL_RenderPresent(ren);
+	SDL_Delay(2000);
+	SDL_DestroyWindow(window);
+	SDL_DestroyRenderer(ren);
+	SDL_Quit();
+*/
 //	int start = clock();
 //	std::cout << omp_get_max_threads() << '\n';
 //	test2();
-	std::vector<std::pair<double, double>> items = singleton::get_items();
+	std::vector<std::pair<int, int>> items = singleton::get_items();
 //	int ndefect = (sz_popul < 10) ? 1 : sz_popul / 10;
 	int max_children = singleton::get_sz_popul();
 	singleton::get_logfile().printLog("maximum number of children = " + std::to_string(max_children));
@@ -237,9 +262,12 @@ int main(int argc, char* argv[])
 	srand(singleton::get_r_seed());
 	std::vector<individual> population;
 	singleton::get_logfile().printLog("creating start population...");
-	for (int i = 0; i < singleton::get_sz_popul(); ++i)
+	for (int i = 0; i < singleton::get_sz_popul() + max_children; ++i)
 		population.push_back(individual());
 	singleton::get_logfile().printLog("done");
+	graph.set_population(population);
+	graph.print_population(0);
+	SDL_Delay(500);
 /*	std::vector<double> fit(sz_popul);
 	#pragma omp parallel for
 	for (int i = 0; i < sz_popul; ++i)
@@ -268,8 +296,9 @@ int main(int argc, char* argv[])
 		{
 			for (int k = j+1; k < singleton::get_sz_popul(); ++k)
 			{
-//				if (will_cross(p_cross(population[j], population), p_cross(population[k], population)))
-				if(will_cross(population[j], population[k]) && kids.size() < max_children)
+//				if (will_cross(p_cross(population[j], population), p_cross(population[k], population)) && kids.size() < max_children)
+//				if (will_cross(population[j], population[k]) && kids.size() < max_children)
+				if (will_cross(population[j].fitness(), population[k].fitness(), population) && kids.size() < max_children)
 				{
 					std::pair<individual, individual> kid = crossing(population[j], population[k]);
 					kids.push_back(kid.first);
@@ -301,6 +330,9 @@ int main(int argc, char* argv[])
 			singleton::get_logfile().printLog(e.to_string());
 		singleton::get_logfile().printLog("population fitnesses:\n" + pop_fit_to_str(population));
 		singleton::get_logfile().printLog("best fitness at the end of generation is " + std::to_string(best_individ(population).fitness()));
+		graph.set_population(population);
+		graph.print_population(i+1);
+		SDL_Delay(500);
 	}
 //	std::cout << "backpack filled with " << best_individ(population).fitness() << '\n';
 //	int end = clock();
@@ -308,5 +340,7 @@ int main(int argc, char* argv[])
 	singleton::get_logfile().printLog("backpack filled with " + std::to_string(best_individ(population).fitness()));
 	singleton::get_logfile().printLog("end of genetic algorithm");
 	singleton::get_logfile().closeLog();
+	SDL_Delay(5000);
+	graph.quit();
 	return 0;
 }

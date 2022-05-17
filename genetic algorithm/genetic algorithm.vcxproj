@@ -150,12 +150,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="graphics.cpp" />
     <ClCompile Include="individual.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="singleton.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="graphics.h" />
     <ClInclude Include="individual.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="log.h" />
