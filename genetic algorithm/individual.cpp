@@ -13,8 +13,6 @@ individual::individual() : stuff(singleton::get_n_items(), -1), flag{0}, prev_fl
 		stuff[i] = bool(rand() % 2);
 }
 
-individual::~individual() = default;
-
 int individual::fitness()
 {
 //	singleton::get_logfile().printLog("getting fitness of individual...");

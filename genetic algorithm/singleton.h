@@ -29,6 +29,7 @@ class singleton {
 	static Log logfile; //log
 	static int width; //screen width for graphics
 	static int height; //screen height for graphics
+	static int max_children; //maximum number of children
 
 	protected:
 
@@ -51,6 +52,7 @@ class singleton {
 	static Log& get_logfile();
 	static const int& get_width();
 	static const int& get_height();
+	static const int& get_max_children();
 };
 
 #endif SINGLETON

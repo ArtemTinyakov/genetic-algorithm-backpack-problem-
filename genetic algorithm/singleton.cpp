@@ -14,7 +14,8 @@ int singleton::r_seed = 1488; //random seed
 int singleton::sz_popul = 15; //size of population
 Log singleton::logfile;
 int singleton::width = 640;
-int singleton::height = 480;
+int singleton::height = 640;
+int singleton::max_children = 15;
 
 singleton::singleton()
 {
@@ -114,4 +115,9 @@ const int& singleton::get_width()
 const int& singleton::get_height()
 {
 	return height;
+}
+
+const int& singleton::get_max_children()
+{
+	return max_children;
 }

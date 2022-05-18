@@ -12,7 +12,7 @@ class individual{
 	public:
 
 		individual();
-		~individual();
+		~individual() = default;
 
 		int fitness();
 		void mutation();

@@ -154,6 +154,7 @@
     <ClCompile Include="individual.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="population.cpp" />
     <ClCompile Include="singleton.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +162,7 @@
     <ClInclude Include="individual.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="log.h" />
+    <ClInclude Include="population.h" />
     <ClInclude Include="singleton.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

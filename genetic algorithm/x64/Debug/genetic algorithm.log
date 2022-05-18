@@ -1,6 +1,22 @@
-﻿  individual.cpp
-C:\Proga\genetic algo\genetic algorithm\genetic algorithm\individual.cpp(9,13): warning C4305: аргумент: усечение из "int" в "const bool"
-  main.cpp
-  Создание кода...
+﻿  graphics.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.32.31326\include\utility(190,48): warning C4267: инициализация: преобразование из "size_t" в "_Ty1"; возможна потеря данных
+          with
+          [
+              _Ty1=int
+          ]
+C:\Proga\genetic algo\genetic algorithm\genetic algorithm\graphics.cpp(77): message : выполняется компиляция ссылки на экземпляр шаблон функции "std::pair<int,int>::pair<unsigned __int64,int,0>(_Other1 &&,_Other2 &&) noexcept"
+          with
+          [
+              _Other1=unsigned __int64,
+              _Other2=int
+          ]
+C:\Proga\genetic algo\genetic algorithm\genetic algorithm\graphics.cpp(77): message : выполняется компиляция ссылки на экземпляр шаблон функции "std::pair<int,int>::pair<unsigned __int64,int,0>(_Other1 &&,_Other2 &&) noexcept"
+          with
+          [
+              _Other1=unsigned __int64,
+              _Other2=int
+          ]
+C:\Proga\genetic algo\genetic algorithm\genetic algorithm\graphics.cpp(116): warning C4715: graphics::make_color: значение возвращается не при всех путях выполнения
+LINK : warning LNK4044: нераспознанный параметр "/utf-8"; игнорируется
 LINK : warning LNK4044: нераспознанный параметр "/utf-8"; игнорируется
   genetic algorithm.vcxproj -> C:\Proga\genetic algo\genetic algorithm\x64\Debug\genetic algorithm.exe

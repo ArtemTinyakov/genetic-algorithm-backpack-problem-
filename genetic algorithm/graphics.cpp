@@ -74,7 +74,7 @@ std::vector<std::pair<int, int>> graphics::positions(int ngen)
 
 std::pair<int, int> graphics::individ_size()
 {
-	return { singleton::get_width() / fit.size(), singleton::get_height() / (singleton::get_max_geners() + 1) };
+	return { singleton::get_width() / fit.size(), singleton::get_height() / (singleton::get_max_geners()+4) };
 }
 
 std::pair<Uint8, Uint8> graphics::make_color(int fitness)
