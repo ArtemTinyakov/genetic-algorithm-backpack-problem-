@@ -5,7 +5,7 @@
 #include <fstream>
 #include <iostream>
 
-individual::individual() : stuff(singleton::get_n_items(), -1)
+individual::individual() : stuff(singleton::get_n_items(), -1), flag{0}, prev_flag{-1}
 {
 //	std::cout << "creating individual...\n";
 	#pragma omp parallel for
@@ -31,13 +31,24 @@ int individual::fitness()
 
 void individual::mutation()
 {
+	int fit = fitness();
+	bool is_mutated{ false };
 //	singleton::get_logfile().printLog("individual is mutating...");
 //	#pragma omp parallel for
 	for (int i = 0; i < stuff.size(); ++i)
-	{
 		if (rand() % 100 < (singleton::get_mut_prob() * 100))
+		{
 			stuff[i] = !stuff[i];
+			is_mutated = true;
+		}
+	if (is_mutated)
+	{
+		set_prev_flag(flag);
+		set_flag(2);
 	}
+/*	if (fit < fitness())
+		std::cout << "individ get better fitness function via mutation!\n";
+*/
 }
 
 individual individual::clone()
@@ -69,6 +80,26 @@ std::string individual::to_string()
 	return res;
 }
 
+int individual::get_flag()
+{
+	return flag;
+}
+
+void individual::set_flag(int f)
+{
+	flag = f;
+}
+
+int individual::get_prev_flag()
+{
+	return prev_flag;
+}
+
+void individual::set_prev_flag(int pf)
+{
+	prev_flag = pf;
+}
+
 std::pair<individual, individual> crossing(individual individ1, individual individ2)
 {
 	singleton::get_logfile().printLog("crossing individuals " + individ1.to_string() + " and " + individ2.to_string());
@@ -81,5 +112,7 @@ std::pair<individual, individual> crossing(individual individ1, individual indiv
 		res.first.stuff[i] = res.second.stuff[i];
 		res.second.stuff[i] = rab;
 	}
+	res.first.set_flag(1);
+	res.second.set_flag(1);
 	return res;
 }

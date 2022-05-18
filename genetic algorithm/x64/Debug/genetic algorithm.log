@@ -1,3 +1,6 @@
-﻿  main.cpp
+﻿  individual.cpp
+C:\Proga\genetic algo\genetic algorithm\genetic algorithm\individual.cpp(9,13): warning C4305: аргумент: усечение из "int" в "const bool"
+  main.cpp
+  Создание кода...
 LINK : warning LNK4044: нераспознанный параметр "/utf-8"; игнорируется
   genetic algorithm.vcxproj -> C:\Proga\genetic algo\genetic algorithm\x64\Debug\genetic algorithm.exe

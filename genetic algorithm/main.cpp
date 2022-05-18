@@ -106,13 +106,35 @@ double max3(double d1, double d2, double d3)
 
 double max_fit(std::vector<individual> popul)
 {
-	singleton::get_logfile().printLog("finding individual with maximal fitness in population...");
+//	singleton::get_logfile().printLog("finding individual with maximal fitness in population...");
 	double res{ 0 };
 	#pragma omp parallel for
 	for (int i = 0; i < popul.size(); ++i)
 		res = (res > popul[i].fitness()) ? res : popul[i].fitness();
-	singleton::get_logfile().printLog("done");
+//	singleton::get_logfile().printLog("done");
 	return res;
+}
+
+void check_best_individs(std::vector<individual> popul, int ngen)
+{
+	std::cout << "generation" << '[' << ngen << "]\n";
+	for (auto e : popul)
+	{
+		if (e.fitness() == max_fit(popul))
+		{
+			if (e.get_flag() == 0)
+				std::cout << "starting\n";
+			if (e.get_flag() == 1)
+			{
+				if (e.get_prev_flag() == 1)
+					std::cout << "was a kid\n";
+				else
+					std::cout << "kid\n";
+			}
+			if (e.get_flag() == 2)
+				std::cout << "mutated\n";
+		}
+	}
 }
 
 double p_cross(individual indiv, std::vector<individual> popul)
@@ -289,6 +311,7 @@ int main(int argc, char* argv[])
 */
 	for (int i = 0; i < singleton::get_max_geners(); ++i)
 	{
+		check_best_individs(population, i + 1);
 		singleton::get_logfile().printLog("\ngeneration [" + std::to_string(i) + "]\n");
 		std::vector<individual> kids;
 		population = tournament(population);

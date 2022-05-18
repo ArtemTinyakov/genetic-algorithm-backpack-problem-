@@ -9,9 +9,9 @@ std::vector<std::pair<int, int>> singleton::items;
 double singleton::mut_prob = 0.2; //probability of mutation
 int singleton::max_wei = 25; //maximum weight in backpack
 int singleton::n_items = 10; //number of items at all
-int singleton::max_geners = 20; //maximum number of generations
-int singleton::r_seed = 228; //random seed
-int singleton::sz_popul = 10; //size of population
+int singleton::max_geners = 50; //maximum number of generations
+int singleton::r_seed = 1488; //random seed
+int singleton::sz_popul = 15; //size of population
 Log singleton::logfile;
 int singleton::width = 640;
 int singleton::height = 480;

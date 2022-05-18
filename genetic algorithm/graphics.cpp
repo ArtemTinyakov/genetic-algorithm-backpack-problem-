@@ -79,7 +79,7 @@ std::pair<int, int> graphics::individ_size()
 
 std::pair<Uint8, Uint8> graphics::make_color(int fitness)
 {
-	double d = (double(fitness) / fit[max_element(fit.begin(), fit.end()) - fit.begin()])*1.6;
+	double d = (double(fitness) / /*fit[max_element(fit.begin(), fit.end()) - fit.begin()]*/29) * 1.6;
 	//говно, но не знаю пока как сделать по-другому
 	if (d <= 0.1)
 		return { 0xFF, 0x00 };
