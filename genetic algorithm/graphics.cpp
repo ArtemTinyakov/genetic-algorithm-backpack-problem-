@@ -111,6 +111,5 @@ std::pair<Uint8, Uint8> graphics::make_color(int fitness)
 		return { 0x22, 0xDD };
 	else if (d <= 1.5)
 		return { 0x11, 0xEE };
-	else if (d <= 1.6)
-		return { 0x00, 0xFF };
+	return { 0x00, 0xFF };
 }

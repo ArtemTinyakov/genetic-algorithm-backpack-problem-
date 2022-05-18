@@ -112,5 +112,7 @@ std::pair<individual, individual> crossing(individual individ1, individual indiv
 	}
 	res.first.set_flag(1);
 	res.second.set_flag(1);
+	res.first.set_prev_flag(-1);
+	res.second.set_prev_flag(-1);
 	return res;
 }

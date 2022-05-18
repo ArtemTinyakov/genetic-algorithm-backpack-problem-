@@ -16,7 +16,11 @@ C:\Proga\genetic algo\genetic algorithm\genetic algorithm\graphics.cpp(77): mess
               _Other1=unsigned __int64,
               _Other2=int
           ]
-C:\Proga\genetic algo\genetic algorithm\genetic algorithm\graphics.cpp(116): warning C4715: graphics::make_color: значение возвращается не при всех путях выполнения
-LINK : warning LNK4044: нераспознанный параметр "/utf-8"; игнорируется
+  individual.cpp
+C:\Proga\genetic algo\genetic algorithm\genetic algorithm\individual.cpp(9,13): warning C4305: аргумент: усечение из "int" в "const bool"
+  main.cpp
+  population.cpp
+  singleton.cpp
+  Создание кода...
 LINK : warning LNK4044: нераспознанный параметр "/utf-8"; игнорируется
   genetic algorithm.vcxproj -> C:\Proga\genetic algo\genetic algorithm\x64\Debug\genetic algorithm.exe

@@ -19,6 +19,7 @@ class population {
 	void mutation();
 	std::string fit_to_str();
 	void print_fit();
+	void print_pop_log();
 	double max_fit();
 	void best_individs_origin(int);
 	double p_cross(int);

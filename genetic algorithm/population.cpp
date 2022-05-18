@@ -68,6 +68,12 @@ void population::print_fit()
 	std::cout << '\n';
 }
 
+void population::print_pop_log()
+{
+	for (auto e : popul)
+		singleton::get_logfile().printLog(e.to_string());
+}
+
 double population::max_fit()
 {
 //	singleton::get_logfile().printLog("finding individual with maximal fitness in population...");
@@ -90,7 +96,7 @@ void population::best_individs_origin(int ngen)
 				std::cout << "starting\n";
 			if (e.get_flag() == 1)
 			{
-				if (e.get_prev_flag() == 1)
+				if (e.get_prev_flag() != -1)
 					std::cout << "was a kid\n";
 				else
 					std::cout << "kid\n";
